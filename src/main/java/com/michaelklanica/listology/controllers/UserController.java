@@ -1,46 +1,71 @@
 package com.michaelklanica.listology.controllers;
 
+import com.michaelklanica.listology.models.User;
+import com.michaelklanica.listology.repos.UserRepository;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
-@RequestMapping("/user")
 public class UserController {
 
+    private UserRepository usersDao;
+    private PasswordEncoder passwordEncoder;
+
+    public UserController(UserRepository usersDao, PasswordEncoder passwordEncoder) {
+        this.usersDao = usersDao;
+        this.passwordEncoder = passwordEncoder;
+    }
+
     //  SHOW USER INDEX
-    @GetMapping("/all")
-    public String showUserIndex(){
+    @GetMapping("/user/all")
+    public String showUserIndex(Model viewModel){
+        viewModel.addAttribute("posts", usersDao.findAll());
         return "user/index";
     }
 
     //  SHOW USER PROFILE
-    @GetMapping("/{id}")
-    public String showUserProfile(@PathVariable long id){
+    @GetMapping("/user/{id}")
+    public String showUserProfile(@PathVariable long id, Model viewModel){
+        viewModel.addAttribute("user", usersDao.getOne(id));
         return "user/profile";
     }
 
     //  SHOW USER EDIT FORM
-    @GetMapping("/{id}/edit")
-    public String showEditUserForm(@PathVariable long id) { return "user/edit"; }
+    @GetMapping("/user/{id}/edit")
+    public String showEditUserForm(@PathVariable long id, Model viewModel) {
+        viewModel.addAttribute("user", usersDao.getOne(id));
+        return "user/edit";
+    }
 
     //  SUBMIT USER EDIT FORM
-    @PostMapping("/{id}/edit")
-    public String submitEditUserForm(@PathVariable long id) { return "redirect:/" + id; }
+    @PostMapping("/user/{id}/edit")
+    public String submitEditUserForm(@PathVariable long id, User userToBeSaved) {
+        usersDao.save(userToBeSaved);
+        return "redirect:/" + id;
+    }
 
-    //  SHOW USER CREATE FORM
-    @GetMapping("/{id}/new")
-    public String showNewUserForm(@PathVariable long id) { return "user/new"; }
+    //  SHOW USER REGISTRATION FORM
+    @GetMapping("/user/register")
+    public String showNewUserForm(Model viewModel) {
+        viewModel.addAttribute("user", new User());
+        return "user/register";
+    }
 
-    //  SUBMIT USER CREATE FORM
-    @PostMapping("/new")
-    public String submitEditUserForm() { return "user/index"; }
+    //  SUBMIT USER REGISTRATION FORM
+    @PostMapping("/user/register")
+    public String submitEditUserForm(@ModelAttribute User userToBeSaved) {
+        usersDao.save(userToBeSaved);
+        return "post/index";
+    }
 
     //  DELETE USER
-    @PostMapping("/{id}/delete")
-    public String deleteUser(@PathVariable long id) {return "user/index"; }
+    @PostMapping("/user/{id}/delete")
+    public String deleteUser(@PathVariable long id) {
+        usersDao.deleteById(id);
+        return "user/index";
+    }
 
 
 }

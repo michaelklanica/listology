@@ -37,30 +37,30 @@ public class Post {
     @JsonManagedReference(value="postRef")
     private User author;
 
-//    @OneToMany(mappedBy = "post")
-//    private Set<Favorite> favoritedBy = new HashSet<>();
-//
-//    @OneToMany(cascade = CascadeType.ALL, mappedBy = "post")
-//    @JsonBackReference
-//    private List<Comment> comments;
+    @OneToMany(mappedBy = "post")
+    private Set<Favorite> favoritedBy = new HashSet<>();
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "post")
+    @JsonBackReference
+    private List<Comment> comments;
 
     public Post() {
     }
 
-//    public Post(User author, String title, String body, List<Comment> comments) {
-//        this.author = author;
-//        this.title = title;
-//        this.body = body;
-//        this.comments = comments;
-//    }
-//
-//    public Post(Long id, User author, String title, String body, List<Comment> comments) {
-//        this.author = author;
-//        this.id = id;
-//        this.title = title;
-//        this.body = body;
-//        this.comments = comments;
-//    }
+    public Post(User author, String title, String body, List<Comment> comments) {
+        this.author = author;
+        this.title = title;
+        this.body = body;
+        this.comments = comments;
+    }
+
+    public Post(Long id, User author, String title, String body, List<Comment> comments) {
+        this.author = author;
+        this.id = id;
+        this.title = title;
+        this.body = body;
+        this.comments = comments;
+    }
 
     public Post(String title, String body) {
         this.title = title;

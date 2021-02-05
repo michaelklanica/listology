@@ -4,10 +4,13 @@
 <body>
 <nav th:replace="partials/navbar :: nav"></nav>
 
-
-
-
-
+// **********************
+// EARLY DEVELOPMENT CODE
+<p>User Edit Form</p>
+<form th:action="@{/user/{id}/edit(id=${user.id})}" th:method="POST">
+    <button type="submit">Submit</button>
+</form>
+// **********************
 
 
 <div th:replace="partials/scripts :: scripts"></div>
