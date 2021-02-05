@@ -54,27 +54,22 @@ public class User {
     @JsonBackReference("postRef")
     private List<Post> posts = new ArrayList<>();
 
-    @OneToMany(mappedBy = "user")
-    @JsonIgnore
-    private Set<Follow> followings = new HashSet<>();
-
-    @OneToMany(mappedBy = "friend")
-    @JsonIgnore
-    private Set<Follow> followers = new HashSet<>();
-
-    @OneToMany(mappedBy = "user")
-    private Set<Favorite> favorites = new HashSet<>();
-
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
-    @JsonBackReference
-    private List<Comment> comments;
+//    @OneToMany(mappedBy = "user")
+//    @JsonIgnore
+//    private Set<Follow> followings = new HashSet<>();
+//
+//    @OneToMany(mappedBy = "friend")
+//    @JsonIgnore
+//    private Set<Follow> followers = new HashSet<>();
+//
+//    @OneToMany(mappedBy = "user")
+//    private Set<Favorite> favorites = new HashSet<>();
+//
+//    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+//    @JsonBackReference
+//    private List<Comment> comments;
 
     public User() {
-    }
-
-    public User(String email, String username) {
-        this.email = email;
-        this.username = username.trim();
     }
 
     public User(String email, String username, String password) {
@@ -164,36 +159,36 @@ public class User {
         this.posts = posts;
     }
 
-    public Set<Follow> getFollowings() {
-        return followings;
-    }
-
-    public void setFollowings(Set<Follow> followings) {
-        this.followings = followings;
-    }
-
-    public Set<Follow> getFollowers() {
-        return followers;
-    }
-
-    public void setFollowers(Set<Follow> followers) {
-        this.followers = followers;
-    }
-
-    public Set<Favorite> getFavorites() {
-        return favorites;
-    }
-
-    public void setFavorites(Set<Favorite> favorites) {
-        this.favorites = favorites;
-    }
-
-    public List<Comment> getComments() {
-        return comments;
-    }
-
-    public void setComments(List<Comment> comments) {
-        this.comments = comments;
-    }
+//    public Set<Follow> getFollowings() {
+//        return followings;
+//    }
+//
+//    public void setFollowings(Set<Follow> followings) {
+//        this.followings = followings;
+//    }
+//
+//    public Set<Follow> getFollowers() {
+//        return followers;
+//    }
+//
+//    public void setFollowers(Set<Follow> followers) {
+//        this.followers = followers;
+//    }
+//
+//    public Set<Favorite> getFavorites() {
+//        return favorites;
+//    }
+//
+//    public void setFavorites(Set<Favorite> favorites) {
+//        this.favorites = favorites;
+//    }
+//
+//    public List<Comment> getComments() {
+//        return comments;
+//    }
+//
+//    public void setComments(List<Comment> comments) {
+//        this.comments = comments;
+//    }
 
 }
