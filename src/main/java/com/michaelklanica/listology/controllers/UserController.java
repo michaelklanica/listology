@@ -21,7 +21,7 @@ public class UserController {
     //  SHOW USER INDEX
     @GetMapping("/user/all")
     public String showUserIndex(Model viewModel){
-        viewModel.addAttribute("posts", usersDao.findAll());
+        viewModel.addAttribute("users", usersDao.findAll());
         return "user/index";
     }
 
@@ -47,17 +47,19 @@ public class UserController {
     }
 
     //  SHOW USER REGISTRATION FORM
-    @GetMapping("/user/register")
+    @GetMapping("/register")
     public String showNewUserForm(Model viewModel) {
         viewModel.addAttribute("user", new User());
         return "user/register";
     }
 
     //  SUBMIT USER REGISTRATION FORM
-    @PostMapping("/user/register")
+    @PostMapping("/register")
     public String submitEditUserForm(@ModelAttribute User userToBeSaved) {
+        String hash = passwordEncoder.encode(userToBeSaved.getPassword());
+        userToBeSaved.setPassword(hash);
         usersDao.save(userToBeSaved);
-        return "post/index";
+        return "redirect:/login";
     }
 
     //  DELETE USER

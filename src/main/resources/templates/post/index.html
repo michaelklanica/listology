@@ -3,8 +3,13 @@
 <head th:replace="partials/head :: head('View Post Index')"></head>
 <body>
 <nav th:replace="partials/navbar :: nav"></nav>
-
-
+<h1>Post Index</h1>
+<div th:each="post : ${posts}">
+    <p th:text="${post.title}"></p>
+    <p th:text="${post.body}"></p>
+    <p th:text="${post.createdAt}"></p>
+    <p th:text="${post.author.username}"></p>
+</div>
 
 
 

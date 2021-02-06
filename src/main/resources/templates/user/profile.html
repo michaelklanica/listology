@@ -4,8 +4,19 @@
 <body>
 <nav th:replace="partials/navbar :: nav"></nav>
 
-
-
+<p th:text="'Username: ' + ${user.username}"></p>
+<p th:text="'About Me: ' + ${user.aboutMe}"></p>
+<p th:text="'Email: ' + ${user.email}"></p>
+<p th:text="'Member since: ' + ${user.createdAt}"></p>
+<div th:each="post : ${user.posts}">
+    <p th:text="${post.title}"></p>
+</div>
+<div th:each="follower : ${user.followers}">
+    <p th:text="${follower.getFriend().username}"></p>
+</div>
+<div th:each="following : ${user.followings}">
+    <p th:text="${following.getFriend().username}"></p>
+</div>
 
 
 

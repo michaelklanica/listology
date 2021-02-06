@@ -3,16 +3,17 @@
 <head th:replace="partials/head :: head('View User Index')"></head>
 <body>
 <nav th:replace="partials/navbar :: nav"></nav>
-
-// **********************
-// EARLY DEVELOPMENT CODE
-<p>User Index</p>
+<h1>User Index</h1>
 <div th:each="user : ${users}">
-
+    <p th:text="'Member since: ' + ${user.createdAt}"></p>
+    <p th:text="'Username: ' + ${user.username}"></p>
+    <p th:text="'Email: ' + ${user.email}"></p>
+    <p th:text="'About Me: ' + ${user.aboutMe}"></p>
+    <div th:each="post : ${user.posts}">
+        <p th:text="${post.title}"></p>
+    </div>
 </div>
 
-
-// **********************
 
 
 
