@@ -1,0 +1,49 @@
+<div class="modal fade" id="registerModal" tabindex="-1" role="dialog" aria-labelledby="registerModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-body">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <div id="regForm"></div>
+                <div class="text-center">
+                    <a class="login-signup-toggle text-decoration-none">Already a member? Log in</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="loginModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-body">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <form action="/login" method="POST" class="text-center px-3 py-4 green-text">
+
+                    <p class="h4 mb-4 chow-font">Listology</p>
+
+                    <!-- E-mail -->
+                    <div class="form-row mb-4">
+                        <div class="col">
+                            <input type="email" id="defaultLoginFormEmail" name="username" class="form-control mb-2" placeholder="E-mail" required>
+                        </div>
+                    </div>
+                    <!-- Password -->
+                    <div class="form-row mb-2">
+                        <div class="col">
+                            <input type="password" id="defaultLoginFormPassword" class="form-control mb-3" name="password" placeholder="Password" required>
+                        </div>
+                    </div>
+                    <!-- Login button -->
+                    <button class="btn btn-green rounded-pill" type="submit" value="Log In">Login</button>
+                </form>
+                <div class="text-center">
+                    <a class="login-signup-toggle text-decoration-none">Not on Listology? Sign up</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

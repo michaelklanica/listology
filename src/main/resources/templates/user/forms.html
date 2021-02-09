@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<form th:fragment="register" th:action="@{/register}" th:method="post" class="text-center px-3 py-4 green-text" th:object="${user}" required>
+
+    <p class="h4 mb-4 chow-font">Listology</p>
+
+    <div class="form-row mb-4">
+        <div class="col">
+            <!-- USERNAME -->
+            <input type="text" id="defaultRegisterFormUsername" class="form-control" placeholder="Username"
+                   th:field="*{username}" required>
+            <p class="red-text" th:if="${#fields.hasErrors('username')}" th:text="${'Invalid Name'}"></p>
+        </div>
+    </div>
+
+    <!-- E-mail -->
+    <div class="form-row mb-4">
+        <div class="col">
+            <input type="email" id="defaultRegisterFormEmail" class="form-control" placeholder="Email" th:field="*{email}" required>
+            <p class="red-text" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></p>
+        </div>
+    </div>
+
+    <!-- Password -->
+    <div class="form-row mb-4">
+        <div class="col">
+            <input type="password" id="defaultRegisterFormPassword" class="form-control" placeholder="Password" aria-describedby="defaultRegisterFormPasswordHelpBlock" th:field="*{password}" required>
+            <p class="red-text" th:if="${#fields.hasErrors('password')}" th:text="${'Invalid Password'}"></p>
+        </div>
+    </div>
+    <small class="form-text text-muted mb-3">
+        <em>At least 8 characters, 1 digit, and 1 special character</em>
+    </small>
+    <!-- Sign up button -->
+    <button class="btn btn-green rounded-pill" type="submit">Register</button>
+</form>
+
+<form th:fragment="login" th:action="@{/login}" th:method="POST" class="text-center px-3 py-4 green-text">
+
+    <p class="h4 mb-4">LISTOLOGY</p>
+
+    <!-- USERNAME -->
+    <div class="form-row mb-4">
+        <div class="col">
+            <input type="text" id="defaultLoginFormUsername" name="username" class="form-control mb-2"
+                   placeholder="Username" required>
+        </div>
+    </div>
+    <!-- Password -->
+    <div class="form-row mb-2">
+        <div class="col">
+            <input type="password" id="defaultLoginFormPassword" class="form-control mb-3" name="password" placeholder="Password" required>
+        </div>
+    </div>
+    <!-- Login button -->
+    <button class="btn btn-green rounded-pill" type="submit" value="Log In">Login</button>
+</form>
+
+<form th:fragment="edit" th:action="@{/user/{id}/edit(id=${user.id})}" th:method="post" class=" p-4" th:object="${user}">
+
+    <p class="h4 mb-4 text-center green-text text-uppercase font-weight-bold">Edit</p>
+
+    <div class="form-group">
+        <label for="editFormName">Name</label>
+        <input type="text" id="editFormName" class="form-control mb-2" placeholder="Name" th:field="*{username}">
+        <p class="red-text" th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></p>
+    </div>
+
+    <div class="form-group">
+        <label for="editFormEmail">Email</label>
+        <input type="email" id="editFormEmail" class="form-control mb-2" placeholder="E-mail" th:field="*{email}">
+        <p class="red-text" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></p>
+    </div>
+
+    <div class="form-group">
+        <label for="editFormAbout">About Me</label>
+        <textarea id="editFormAbout" class="form-control mb-2" placeholder="Quick summary about yourself" th:field="*{aboutMe}"></textarea>
+        <p class="red-text" th:if="${#fields.hasErrors('aboutMe')}" th:errors="*{aboutMe}"></p>
+    </div>
+
+    <!-- submit button -->
+    <button class="btn btn-green my-4 btn-block rounded-pill" type="submit">Update</button>
+</form>
+
+<form th:fragment="resetPassword" th:action="@{/user/{id}/reset(id=${user.id})}" th:method="post" class=" p-4">
+    <p class="h4 mb-4 text-center green-text text-uppercase font-weight-bold">Reset Password</p>
+    <div class="form-group">
+        <label for="currentPassword">Current Password</label>
+        <input id="currentPassword" name="password" class="form-control" type="password">
+    </div>
+    <div class="form-group">
+        <label for="new_password">New Password</label>
+        <input id="new_password" name="new_password" class="form-control" type="password">
+    </div>
+    <div class="form-group">
+        <label for="confirm_password">Confirm Password</label>
+        <input id="confirm_password" name="confirm_password" class="form-control" type="password">
+    </div>
+    <!-- submit button -->
+    <button class="btn btn-green my-4 btn-block rounded-pill" type="submit">Reset</button>
+</form>
+</body>
+</html>

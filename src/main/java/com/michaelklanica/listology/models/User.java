@@ -8,6 +8,8 @@ import org.hibernate.annotations.UpdateTimestamp;
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 import java.util.*;
 
 
@@ -29,7 +31,14 @@ public class User {
     private String email;
 
     @Column(nullable = false)
-    @NotBlank(message = "Password can't be empty")
+    @Size(min = 8,message = "Password must be at least 8 characters")
+    @Pattern.List({
+            @Pattern(regexp = "(?=.*[0-9]).+"),
+            @Pattern(regexp = "(?=.*[a-z]).+"),
+            @Pattern(regexp = "(?=.*[A-Z]).+"),
+            @Pattern(regexp = "(?=.*[!@#\\$%\\^&\\*]).+"),
+            @Pattern(regexp = "(?=\\S+$).+")
+    })
     @JsonIgnore
     private String password;
 
@@ -53,14 +62,6 @@ public class User {
     @OneToMany(mappedBy = "author", cascade = CascadeType.ALL,orphanRemoval = true)
     @JsonBackReference("postRef")
     private List<Post> posts = new ArrayList<>();
-
-    @OneToMany(mappedBy = "user")
-    @JsonIgnore
-    private Set<Follow> followings = new HashSet<>();
-
-    @OneToMany(mappedBy = "friend")
-    @JsonIgnore
-    private Set<Follow> followers = new HashSet<>();
 
     @OneToMany(mappedBy = "user")
     private Set<Favorite> favorites = new HashSet<>();
@@ -150,10 +151,6 @@ public class User {
         this.updatedAt = updatedAt;
     }
 
-    public boolean isAdmin() {
-        return isAdmin;
-    }
-
     public void setAdmin(boolean admin) {
         isAdmin = admin;
     }
@@ -164,22 +161,6 @@ public class User {
 
     public void setPosts(List<Post> posts) {
         this.posts = posts;
-    }
-
-    public Set<Follow> getFollowings() {
-        return followings;
-    }
-
-    public void setFollowings(Set<Follow> followings) {
-        this.followings = followings;
-    }
-
-    public Set<Follow> getFollowers() {
-        return followers;
-    }
-
-    public void setFollowers(Set<Follow> followers) {
-        this.followers = followers;
     }
 
     public Set<Favorite> getFavorites() {
@@ -198,4 +179,7 @@ public class User {
         this.comments = comments;
     }
 
+    public boolean getAdmin() {
+        return isAdmin;
+    }
 }

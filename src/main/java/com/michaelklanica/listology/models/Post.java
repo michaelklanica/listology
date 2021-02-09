@@ -7,6 +7,8 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 import java.util.*;
 
 @Entity(name = "Post")
@@ -17,9 +19,13 @@ public class Post {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
+    @Size(min = 0, message = "Your title should be a longer.")
+    @Size(max = 1000, message = "Your title is too long.")
+    @NotBlank(message = "Your post needs a title.")
     @Column(nullable = false)
     private String title;
 
+    @NotBlank(message= "Your post needs a body.")
     @Column(nullable = false, columnDefinition = "TEXT")
     private String body;
 
@@ -115,21 +121,21 @@ public class Post {
         this.author = author;
     }
 
-//    public Set<Favorite> getFavoritedBy() {
-//        return favoritedBy;
-//    }
-//
-//    public void setFavoritedBy(Set<Favorite> favoritedBy) {
-//        this.favoritedBy = favoritedBy;
-//    }
-//
-//    public List<Comment> getComments() {
-//        return comments;
-//    }
-//
-//    public void setComments(List<Comment> comments) {
-//        this.comments = comments;
-//    }
+    public Set<Favorite> getFavoritedBy() {
+        return favoritedBy;
+    }
+
+    public void setFavoritedBy(Set<Favorite> favoritedBy) {
+        this.favoritedBy = favoritedBy;
+    }
+
+    public List<Comment> getComments() {
+        return comments;
+    }
+
+    public void setComments(List<Comment> comments) {
+        this.comments = comments;
+    }
 
     public void setUser(User randomUser) {
     }

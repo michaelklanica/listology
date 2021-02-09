@@ -1,15 +1,44 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head th:replace="partials/head :: head('Create a Post')"></head>
 <body>
-<nav th:replace="partials/navbar :: nav"></nav>
-<h1>Post Create</h1>
+<header>
+    <nav th:replace="partials/navbar.html :: nav"></nav>
+</header>
+<main class="pt-5 ">
+    <div class="container bg-light tab-card rounded-card shadow-lg mt-4 p-3 green-text font-weight-bold">
+        <form th:action="@{/post/new}" th:method="post" th:object="${post}">
 
+            <!--    ENTER POST TITLE   -->
+            <div class="form-group mb-3 px-4">
+                <label id="title">Title</label>
+                <input type="text" class="form-control" aria-label="Title"
+                       aria-describedby="title" th:field="*{title}" required placeholder="title"/>
+                <p th:if="${#fields.hasErrors('title')}" th:errors="*{title}"></p>
+            </div>
 
+            <!--    ENTER POST BODY -->
+            <div class="form-group px-4">
+                <label>Description</label>
+                <textarea class="form-control" placeholder="body" aria-label="body"
+                          rows="3" th:field="*{body}" minlength="10"></textarea>
+                <p th:if="${#fields.hasErrors('body')}" th:errors="*{body}"></p>
+                <p id="recipe-id"></p>
+            </div>
 
+            <div class="form-group d-flex justify-content-center align-items-center">
+                <button sec:authorize="isAuthenticated()" th:if="${post.id == 0}"
+                        class="btn text-center nav-link shadow px-2" type="submit">
+                    Submit
+                </button>
+            </div>
+        </form>
 
+    </div>
+    <!--JS SCRIPTS-->
+    <!--! MODALS-->
+    <th:block th:include="partials/scripts :: scripts"></th:block>
+    <script th:src="@{/js/post.js}"></script>
 
-
-<div th:replace="partials/scripts :: scripts"></div>
 </body>
 </html>

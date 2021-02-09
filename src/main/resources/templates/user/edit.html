@@ -2,17 +2,29 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head th:replace="partials/head :: head('Edit a Profile')"></head>
 <body>
-<nav th:replace="partials/navbar :: nav"></nav>
-
-// **********************
-// EARLY DEVELOPMENT CODE
-<p>User Edit Form</p>
-<form th:action="@{/user/{id}/edit(id=${user.id})}" th:method="POST">
-    <button type="submit">Submit</button>
-</form>
-// **********************
-
-
+<header>
+    <nav th:replace="partials/navbar.html :: nav"></nav>
+</header>
+<main>
+    <div class="container">
+        <div class="row mt-5 pt-md-5">
+            <div class="col-md-3 my-2 white-text text-center ">
+                <a class="btn btn-block btn-yellow btn-outline-default shadow" th:href="@{/user/{id}(id=${user.id})}">View Profile</a>
+            </div>
+            <div class="col-md-9 mb-4">
+                <!--    EDIT USER FORM -->
+                <div class="card bg-light rounded-card shadow-lg my-4">
+                    <form th:replace="user/forms :: edit"></form>
+                </div>
+                <div th:if="${canChange}" class="card bg-light rounded-card shadow-lg my-4">
+                    <form th:replace="user/forms :: resetPassword"></form>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+<!--MODALS-->
+<div th:replace="partials/modals"></div>
 <div th:replace="partials/scripts :: scripts"></div>
 </body>
 </html>

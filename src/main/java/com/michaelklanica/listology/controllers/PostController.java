@@ -4,16 +4,27 @@ import com.michaelklanica.listology.models.Post;
 import com.michaelklanica.listology.models.User;
 import com.michaelklanica.listology.repos.PostRepository;
 import com.michaelklanica.listology.repos.UserRepository;
+import com.michaelklanica.listology.services.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
 
 @Controller
 public class PostController {
 
+    @Autowired
     private final PostRepository postDao;
+
+    @Autowired
     private final UserRepository userDao;
+
+    @Autowired
+    private UserService userServ;
 
     public PostController(PostRepository postDao, UserRepository userDao) {
         this.postDao = postDao;
@@ -50,24 +61,33 @@ public class PostController {
         User userDb = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         postToBeSaved.setAuthor(userDb);
         postDao.save(postToBeSaved);
-        return "redirect:/" + id;
+        return "redirect:/post/" + id;
     }
 
     //  SHOW POST CREATE FORM
     @GetMapping("/post/new")
     public String showNewPostForm(Model viewModel) {
         viewModel.addAttribute("post", new Post());
+        viewModel.addAttribute("user", userServ.loggedInUser());
         return "post/new";
     }
 
     //  SUBMIT POST CREATE FORM
     @PostMapping("/post/new")
-    public String submitEditPostForm(@ModelAttribute Post postToBeSaved) {
-        User userDb = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        postToBeSaved.setAuthor(userDb);
-        // THIS IS A GOOD PLACE TO ADD ANY RELATED DATA
-        postDao.save(postToBeSaved);
-        return "post/index";
+    public String submitNewPostForm(@Valid @ModelAttribute Post postToBeSaved, Errors validation, Model viewModel) {
+        // POST MODEL VALIDATIONS
+        if (validation.hasErrors()) {
+            viewModel.addAttribute("errors", validation);
+            viewModel.addAttribute("post", postToBeSaved);
+            viewModel.addAttribute("user", userServ.loggedInUser());
+            return "post/new";
+        }
+
+        User currentUser = userServ.loggedInUser();
+        postToBeSaved.setAuthor(currentUser);
+        Post currentPost = postDao.save(postToBeSaved);
+
+        return "redirect:/post/"+currentPost.getId()+"/edit";
     }
 
     //  DELETE POST
