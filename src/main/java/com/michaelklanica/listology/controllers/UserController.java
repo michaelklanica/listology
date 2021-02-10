@@ -114,41 +114,57 @@ public class UserController {
 
     //  SHOW USER REGISTRATION FORM
     @GetMapping("/register")
-    public String showNewUserForm(Model viewModel) {
+    public String showNewUserForm(Model model) {
         if(userServ.isLoggedIn()){
             return "redirect:/post/all";
         }
-        viewModel.addAttribute("user", new User());
+        model.addAttribute("user", new User());
         return "user/register";
     }
 
     //  SUBMIT USER REGISTRATION FORM
     @PostMapping("/register")
-    public String submitEditUserForm(@ModelAttribute User userToBeSaved, Errors validation, Model model) {
+    public String submitEditUserForm(
+            @Valid @ModelAttribute User user,
+            Errors validation,
+            Model model
+    ) {
+        // validate if username already exists in db
+        User existingUsername = usersDao.getFirstByUsername(user.getUsername());
+        if(existingUsername != null){
+            validation.rejectValue("username", "user.username",  "username already registered");
+        }
         // validate if email already exists in db
-        User existingEmail = usersDao.getFirstByEmail(userToBeSaved.getEmail());
+        User existingEmail = usersDao.getFirstByEmail(user.getEmail());
         if(existingEmail != null){
             validation.rejectValue("email", "user.email",  "email already registered");
         }
         // user model validations
         if (validation.hasErrors()) {
             model.addAttribute("errors", validation);
-            model.addAttribute("user", userToBeSaved);
+            model.addAttribute("user", user);
             return "user/register";
         }
         // encrypt password
-        userToBeSaved.setPassword(passwordEncoder.encode(userToBeSaved.getPassword()));
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         // add fields to the existing user
-        userToBeSaved.setAdmin(false);
+        user.setAdmin(false);
 
         // save th user to db
-        User dbUser = usersDao.save(userToBeSaved);
+        User dbUser = usersDao.save(user);
 
         // login the registered user
         userServ.authenticate(dbUser);
         model.addAttribute(dbUser);
         return "redirect:/user/"+dbUser.getId();
     }
+
+//    // PARTIAL REGISTER FORM
+//    @GetMapping("/register-form")
+//    public String getRegisterForm(Model model) {
+//        model.addAttribute("user", new User());
+//        return "user/forms :: register";
+//    }
 
     // UPDATE PASSWORD
     @PostMapping("/users/{id}/reset")

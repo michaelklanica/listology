@@ -1,3 +1,15 @@
+* {
+    margin:0; padding:0; box-sizing:border-box;
+}
+
+body{
+    font-family: monospace;
+    height: 100vh;
+    background-color: #4B593E;
+}
+main{
+    padding-bottom: 50px;
+}
 /* Navbar section */
 
 .main-nav {
@@ -15,7 +27,7 @@
     width: auto;
     height: auto;
     padding-left: 3rem;
-    font-family: 'peace_sansregular';
+    font-family: monospace;
 
 }
 
@@ -46,15 +58,14 @@
 .main-nav div.main_list ul li {
     width: auto;
     height: 65px;
-    padding: 0;
-    padding-right: 3rem;
+    padding: 0 3rem 0 0;
 }
 
 .main-nav div.main_list ul li a {
     text-decoration: none;
     color: #fff;
     line-height: 65px;
-    font-family: 'corsa';
+    font-family: monospace;
     font-size: 2rem;
 }
 

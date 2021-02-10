@@ -31,7 +31,7 @@ public class User {
     private String email;
 
     @Column(nullable = false)
-    @Size(min = 8,message = "Password must be at least 8 characters")
+    @Size(min = 8, message = "Password must be at least 8 characters")
     @Pattern.List({
             @Pattern(regexp = "(?=.*[0-9]).+"),
             @Pattern(regexp = "(?=.*[a-z]).+"),
