@@ -39,6 +39,14 @@ public class Post {
     @Column(name = "updated_at")
     private Date updatedAt;
 
+
+    @Enumerated(EnumType.STRING)
+    private Category category;
+
+    enum Category {
+        music, movies, books, other
+    }
+
     @ManyToOne
     @JsonManagedReference(value="postRef")
     private User author;
@@ -53,24 +61,27 @@ public class Post {
     public Post() {
     }
 
-    public Post(User author, String title, String body, List<Comment> comments) {
+    public Post(User author, String title, String body, List<Comment> comments, Category category) {
         this.author = author;
         this.title = title;
         this.body = body;
+        this.category = category;
         this.comments = comments;
     }
 
-    public Post(Long id, User author, String title, String body, List<Comment> comments) {
+    public Post(Long id, User author, String title, String body, Category category, List<Comment> comments) {
         this.author = author;
         this.id = id;
         this.title = title;
         this.body = body;
+        this.category = category;
         this.comments = comments;
     }
 
-    public Post(String title, String body) {
+    public Post(String title, String body, Category category) {
         this.title = title;
         this.body = body;
+        this.category = category;
     }
 
     public long getId() {
@@ -119,6 +130,14 @@ public class Post {
 
     public void setAuthor(User author) {
         this.author = author;
+    }
+
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
     }
 
     public Set<Favorite> getFavoritedBy() {

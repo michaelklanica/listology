@@ -84,3 +84,12 @@ main{
     -webkit-transition: all 0.4s ease;
     transition: all 0.4s ease;
 }
+
+.pre-post-body {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 4; /* number of lines to show */
+    -webkit-box-orient: vertical;
+    white-space: pre-wrap;
+}

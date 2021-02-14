@@ -5,11 +5,11 @@
 <nav th:replace="partials/navbar :: nav"></nav>
 <div class="d-flex align-items-start">
     <div class="nav flex-column nav-pills me-3" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-        <a class="nav-link active" id="v-pills-music-tab" data-bs-toggle="pill" href="#v-pills-music" role="tab"
+        <a class="nav-link active m-2" id="v-pills-music-tab" data-bs-toggle="pill" href="#v-pills-music" role="tab"
            aria-controls="v-pills-music" aria-selected="true">music</a>
-        <a class="nav-link" id="v-pills-movies-tab" data-bs-toggle="pill" href="#v-pills-movies" role="tab"
+        <a class="nav-link m-2" id="v-pills-movies-tab" data-bs-toggle="pill" href="#v-pills-movies" role="tab"
            aria-controls="v-pills-movies" aria-selected="false">movies</a>
-        <a class="nav-link" id="v-pills-books-tab" data-bs-toggle="pill" href="#v-pills-books" role="tab"
+        <a class="nav-link m-2" id="v-pills-books-tab" data-bs-toggle="pill" href="#v-pills-books" role="tab"
            aria-controls="v-pills-books" aria-selected="false">books</a>
     </div>
     <div class="tab-content" id="v-pills-tabContent">
@@ -18,11 +18,11 @@
             <!--            MUSIC LISTS GO HERE-->
             <h5>Music Lists</h5>
             <div th:each="post : ${posts}">
-                <div class="card" style="width: 18rem;">
+                <div class="card m-4" style="width: 80%; margin:0 auto;">
                     <div class="card-body">
                         <h5 class="card-title" th:text="${post.title}"></h5>
                         <h6 class="card-subtitle mb-2 text-muted" th:text="${post.author.username}"></h6>
-                        <p class="card-text" th:text="${post.body}"></p>
+                        <p class="pre-post-body card-text" th:text="${post.body}"></p>
                         <a href="#postModal" data-bs-toggle="modal" class="card-link">View more</a>
                     </div>
                 </div>
@@ -32,7 +32,7 @@
             <!--            MOVIE LISTS GO HERE-->
             <h5>Movie Lists</h5>
             <div th:each="post : ${posts}">
-                <div class="card" style="width: 18rem;">
+                <div class="card m-4" style="width: 80%; margin:0 auto;">
                     <div class="card-body">
                         <h5 class="card-title" th:text="${post.title}"></h5>
                         <h6 class="card-subtitle mb-2 text-muted" th:text="${post.author.username}"></h6>
@@ -46,7 +46,7 @@
             <!--            BOOK LISTS GO HERE-->
             <h5>Book Lists</h5>
             <div th:each="post : ${posts}">
-                <div class="card" style="width: 18rem;">
+                <div class="card m-4" style="width: 80%; margin:0 auto;">
                     <div class="card-body">
                         <h5 class="card-title" th:text="${post.title}"></h5>
                         <h6 class="card-subtitle mb-2 text-muted" th:text="${post.author.username}"></h6>
