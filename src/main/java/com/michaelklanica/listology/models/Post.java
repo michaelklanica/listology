@@ -39,13 +39,9 @@ public class Post {
     @Column(name = "updated_at")
     private Date updatedAt;
 
-
-    @Enumerated(EnumType.STRING)
-    private Category category;
-
-    enum Category {
-        music, movies, books, other
-    }
+    @NotBlank(message = "Your post needs a category.")
+    @Column(nullable = false)
+    private String category;
 
     @ManyToOne
     @JsonManagedReference(value="postRef")
@@ -61,7 +57,7 @@ public class Post {
     public Post() {
     }
 
-    public Post(User author, String title, String body, List<Comment> comments, Category category) {
+    public Post(User author, String title, String body, List<Comment> comments, String category) {
         this.author = author;
         this.title = title;
         this.body = body;
@@ -69,7 +65,7 @@ public class Post {
         this.comments = comments;
     }
 
-    public Post(Long id, User author, String title, String body, Category category, List<Comment> comments) {
+    public Post(Long id, User author, String title, String body, String category, List<Comment> comments) {
         this.author = author;
         this.id = id;
         this.title = title;
@@ -78,7 +74,7 @@ public class Post {
         this.comments = comments;
     }
 
-    public Post(String title, String body, Category category) {
+    public Post(String title, String body, String category) {
         this.title = title;
         this.body = body;
         this.category = category;
@@ -132,11 +128,11 @@ public class Post {
         this.author = author;
     }
 
-    public Category getCategory() {
+    public String getCategory() {
         return category;
     }
 
-    public void setCategory(Category category) {
+    public void setCategory(String category) {
         this.category = category;
     }
 
