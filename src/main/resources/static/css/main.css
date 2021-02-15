@@ -10,6 +10,42 @@ body{
 main{
     padding-bottom: 50px;
 }
+
+
+body {
+    font-family: 'Righteous', cursive;
+}
+
+.navbar {
+    background-color: #022601;
+}
+
+.navbar-brand {
+    font-size: 2.5em;
+    color: #BF8F36;
+}
+
+.navbar-brand:hover {
+    color: #8C783B;
+}
+
+.nav-link {
+    color: #BF8F36;
+}
+
+.nav-link:hover {
+    color: #8C783B;
+}
+
+.rounded-pill {
+    background-color: #BF8F36;
+    color: #022601;
+}
+
+.custom-toggler.navbar-toggler {
+    border-color: #BF8F36;
+}
+
 /* Navbar section */
 
 .main-nav {
