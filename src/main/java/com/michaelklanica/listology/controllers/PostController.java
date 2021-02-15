@@ -34,7 +34,10 @@ public class PostController {
     //  SHOW POST INDEX
     @GetMapping("/post/all")
     public String showPostIndex(Model viewModel){
-        viewModel.addAttribute("posts", postDao.findAll());
+        viewModel.addAttribute("musicposts", postDao.findAllByCategory("music"));
+        viewModel.addAttribute("movieposts", postDao.findAllByCategory("movies"));
+        viewModel.addAttribute("bookposts", postDao.findAllByCategory("books"));
+        viewModel.addAttribute("otherposts", postDao.findAllByCategory("other"));
         return "post/index";
     }
 
@@ -87,7 +90,7 @@ public class PostController {
         postToBeSaved.setAuthor(currentUser);
         Post currentPost = postDao.save(postToBeSaved);
 
-        return "redirect:/post/"+currentPost.getId()+"/edit";
+        return "redirect:/user/"+currentUser.getId();
     }
 
     //  DELETE POST

@@ -11,19 +11,21 @@
            aria-controls="v-pills-movies" aria-selected="false">movies</a>
         <a class="nav-link m-2" id="v-pills-books-tab" data-bs-toggle="pill" href="#v-pills-books" role="tab"
            aria-controls="v-pills-books" aria-selected="false">books</a>
+        <a class="nav-link m-2" id="v-pills-other-tab" data-bs-toggle="pill" href="#v-pills-other" role="tab"
+           aria-controls="v-pills-other" aria-selected="false">other</a>
     </div>
     <div class="tab-content" id="v-pills-tabContent">
         <div class="tab-pane fade show active" id="v-pills-music" role="tabpanel"
              aria-labelledby="v-pills-music-tab">
             <!--            MUSIC LISTS GO HERE-->
             <h5>Music Lists</h5>
-            <div th:each="post : ${posts}">
+            <div th:each="post : ${musicposts}">
                 <div class="card m-4" style="width: 80%; margin:0 auto;">
                     <div class="card-body">
                         <h5 class="card-title" th:text="${post.title}"></h5>
                         <h6 class="card-subtitle mb-2 text-muted" th:text="${post.author.username}"></h6>
                         <p class="pre-post-body card-text" th:text="${post.body}"></p>
-                        <a href="#postModal" data-bs-toggle="modal" class="card-link">View more</a>
+                        <a th:href="@{/post/{id}(id=${ post.id })}" data-bs-toggle="modal" class="card-link">View more</a>
                     </div>
                 </div>
             </div>
@@ -31,13 +33,13 @@
         <div class="tab-pane fade" id="v-pills-movies" role="tabpanel" aria-labelledby="v-pills-movies-tab">
             <!--            MOVIE LISTS GO HERE-->
             <h5>Movie Lists</h5>
-            <div th:each="post : ${posts}">
+            <div th:each="post : ${movieposts}">
                 <div class="card m-4" style="width: 80%; margin:0 auto;">
                     <div class="card-body">
                         <h5 class="card-title" th:text="${post.title}"></h5>
                         <h6 class="card-subtitle mb-2 text-muted" th:text="${post.author.username}"></h6>
-                        <p class="card-text" th:text="${post.body}"></p>
-                        <a href="#postModal" data-bs-toggle="modal" class="card-link">View more</a>
+                        <p class="pre-post-body card-text" th:text="${post.body}"></p>
+                        <a th:href="@{/post/{id}(id=${ post.id })}" data-bs-toggle="modal" class="card-link">View more</a>
                     </div>
                 </div>
             </div>
@@ -45,13 +47,27 @@
         <div class="tab-pane fade" id="v-pills-books" role="tabpanel" aria-labelledby="v-pills-books-tab">
             <!--            BOOK LISTS GO HERE-->
             <h5>Book Lists</h5>
-            <div th:each="post : ${posts}">
+            <div th:each="post : ${bookposts}">
                 <div class="card m-4" style="width: 80%; margin:0 auto;">
                     <div class="card-body">
                         <h5 class="card-title" th:text="${post.title}"></h5>
                         <h6 class="card-subtitle mb-2 text-muted" th:text="${post.author.username}"></h6>
-                        <p class="card-text" th:text="${post.body}"></p>
-                        <a href="#postModal" data-bs-toggle="modal" class="card-link">View more</a>
+                        <p class="pre-post-body card-text" th:text="${post.body}"></p>
+                        <a th:href="@{/post/{id}(id=${ post.id })}" data-bs-toggle="modal" class="card-link">View more</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="tab-pane fade" id="v-pills-other" role="tabpanel" aria-labelledby="v-pills-other-tab">
+            <!--            OTHER LISTS GO HERE-->
+            <h5>Other Lists</h5>
+            <div th:each="post : ${otherposts}">
+                <div class="card m-4" style="width: 80%; margin:0 auto;">
+                    <div class="card-body">
+                        <h5 class="card-title" th:text="${post.title}"></h5>
+                        <h6 class="card-subtitle mb-2 text-muted" th:text="${post.author.username}"></h6>
+                        <p class="pre-post-body card-text" th:text="${post.body}"></p>
+                        <a th:href="@{/post/{id}(id=${ post.id })}" data-bs-toggle="modal" class="card-link">View more</a>
                     </div>
                 </div>
             </div>

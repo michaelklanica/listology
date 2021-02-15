@@ -39,7 +39,38 @@
                     <p id="recipe-id" th:text="${post.id}" hidden></p>
 
                     <form th:action="@{/post/{id}/edit(id=${post.id})}" th:method="post" th:object="${post}">
-                        <!--    ENTER A RECIPE TITLE   -->
+                        <!--    UPDATE CATEGORY-->
+                        <div class="form-group px-4">
+                            <label>Category</label><br>
+                            <div class="custom-control custom-radio custom-control-inline">
+                                <input class="custom-control-input" type="radio" name="category" id="music" th:field="*{category}"
+                                       value="music" checked required>
+                                <label class="custom-control-label mr-2" for="music" >Music</label>
+                            </div>
+                            <div class="custom-control custom-radio custom-control-inline">
+                                <input class="custom-control-input" type="radio" name="category" id="movies"
+                                       th:field="*{category}" value="movies" required>
+                                <label class="custom-control-label mr-2" for="movies">
+                                    Movies
+                                </label>
+                            </div>
+                            <div class="custom-control custom-radio custom-control-inline">
+                                <input class="custom-control-input" type="radio" name="category" id="books"
+                                       th:field="*{category}" value="books" required>
+                                <label class="custom-control-label mr-2" for="books">
+                                    Books
+                                </label>
+                            </div>
+                            <div class="custom-control custom-radio custom-control-inline">
+                                <input class="custom-control-input" type="radio" name="category" id="other"
+                                       th:field="*{category}" value="other" required>
+                                <label class="custom-control-label mr-2" for="other">
+                                    Other
+                                </label>
+                            </div>
+                            <p th:if="${#fields.hasErrors('category')}" th:errors="*{category}"></p>
+                        </div>
+                        <!--    UPDATE TITLE   -->
                         <div class="form-group mb-3 px-4">
                             <label id="title">Title</label>
                             <input type="text" class="form-control" aria-label="Title"
@@ -48,7 +79,7 @@
                             <p th:if="${#fields.hasErrors('title')}" th:errors="*{title}"></p>
                         </div>
 
-                        <!--    ENTER RECIPE DESCRIPTION -->
+                        <!--    UPDATE BODY -->
                         <div class="form-group px-4">
                             <label>Body</label>
                             <textarea class="form-control" placeholder="your savory description .."

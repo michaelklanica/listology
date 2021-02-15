@@ -8,7 +8,37 @@
 <main class="pt-5 ">
     <div class="container bg-light tab-card mt-4 p-3">
         <form th:action="@{/post/new}" th:method="post" th:object="${post}">
-
+            <!--    ENTER CATEGORY-->
+            <div class="form-group px-4">
+                <label>Category</label><br>
+                <div class="custom-control custom-radio custom-control-inline">
+                    <input class="custom-control-input" type="radio" name="category" id="music" th:field="*{category}"
+                           value="music" checked required>
+                    <label class="custom-control-label mr-2" for="music" >Music</label>
+                </div>
+                <div class="custom-control custom-radio custom-control-inline">
+                    <input class="custom-control-input" type="radio" name="category" id="movies"
+                           th:field="*{category}" value="movies" required>
+                    <label class="custom-control-label mr-2" for="movies">
+                        Movies
+                    </label>
+                </div>
+                <div class="custom-control custom-radio custom-control-inline">
+                    <input class="custom-control-input" type="radio" name="category" id="books"
+                           th:field="*{category}" value="books" required>
+                    <label class="custom-control-label mr-2" for="books">
+                        Books
+                    </label>
+                </div>
+                <div class="custom-control custom-radio custom-control-inline">
+                    <input class="custom-control-input" type="radio" name="category" id="other"
+                           th:field="*{category}" value="other" required>
+                    <label class="custom-control-label mr-2" for="other">
+                        Other
+                    </label>
+                </div>
+                <p th:if="${#fields.hasErrors('category')}" th:errors="*{category}"></p>
+            </div>
             <!--    ENTER POST TITLE   -->
             <div class="form-group mb-3 px-4">
                 <label id="title">Title</label>
