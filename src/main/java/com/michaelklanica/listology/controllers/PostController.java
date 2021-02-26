@@ -1,7 +1,9 @@
 package com.michaelklanica.listology.controllers;
 
+import com.michaelklanica.listology.models.Comment;
 import com.michaelklanica.listology.models.Post;
 import com.michaelklanica.listology.models.User;
+import com.michaelklanica.listology.repos.CommentRepository;
 import com.michaelklanica.listology.repos.PostRepository;
 import com.michaelklanica.listology.repos.UserRepository;
 import com.michaelklanica.listology.services.UserService;
@@ -13,6 +15,7 @@ import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @Controller
 public class PostController {
@@ -24,11 +27,15 @@ public class PostController {
     private final UserRepository userDao;
 
     @Autowired
+    private final CommentRepository commentDao;
+
+    @Autowired
     private UserService userServ;
 
-    public PostController(PostRepository postDao, UserRepository userDao) {
+    public PostController(PostRepository postDao, UserRepository userDao, CommentRepository commentDao) {
         this.postDao = postDao;
         this.userDao = userDao;
+        this.commentDao = commentDao;
     }
 
     //  SHOW POST INDEX
@@ -98,6 +105,24 @@ public class PostController {
     public String deletePost(@PathVariable long id) {
         postDao.deleteById(id);
         return "post/index";
+    }
+
+    //  SHOW COMMENT CREATE FORM
+    @GetMapping("/post/{id}/comment")
+    public String showNewCommentForm(@PathVariable long id, Model viewModel) {
+        viewModel.addAttribute("comment", new Comment());
+        viewModel.addAttribute("postId", id);
+        viewModel.addAttribute("user", userServ.loggedInUser());
+        return "post/show";
+    }
+
+    //  SUBMIT POST COMMENT FORM
+    @PostMapping("/post/{id}/comment")
+    public String submitPostCommentForm(@PathVariable long id, Comment commentToBeSaved) {
+        User userDb = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        commentToBeSaved.setUser(userDb);
+        commentDao.save(commentToBeSaved);
+        return "post/" + id;
     }
 
 }
